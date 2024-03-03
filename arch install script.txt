@@ -1,0 +1,43 @@
+ cat /sys/firmware/efi/fw_platform_size
+
+ ping archlinux.org
+
+ timedatectl# 
+
+fdisk -l
+
+fdisk /dev/sda 
+
+ mkfs.ext4 /dev/sda3
+
+mkswap /dev/sda2 
+
+mkfs.fat -F 32 /dev/sda1
+
+mount /dev/root_partition /mnt
+
+mount --mkdir /dev/efi_system_partition /mnt/boot
+
+swapon /dev/swap_partition
+
+pacstrap -K /mnt base linux linux-firmware
+
+ genfstab -U /mnt >> /mnt/etc/fstab
+
+arch-chroot /mnt
+
+ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
+
+ hwclock --systohc
+
+ locale-gen
+
+/etc/locale.conf LANG=en_US.UTF-8
+
+/etc/hostname arch
+
+passwd
+
+reboot 
+
+sudo pacman -s bspwm
