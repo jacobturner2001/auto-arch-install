@@ -1,0 +1,99 @@
+ping google.com 
+
+timedatectl set-ntp true
+timedatectl status
+
+fdisk -l
+fdisk /dev/sda  
+In fdisk, "m" for help
+In fdisk, "o" for DOS partition 
+"g" for GPT for UEFI partiton
+In fdisk, "n" for add new partition
+In fdisk, "p" for primary partition (if using MBR instead of GPT)
+In fdisk, "t" to change partition type
+In fdisk, "w" (write table to disk)
+
+Make filesystem:
+mkfs.fat -F32 /dev/sda1
+mkswap /dev/sda2
+swapon /dev/sda2
+mkfs.ext4 /dev/sda3
+
+Base Install:
+mount /dev/sda3 /mnt (mounts it to mnt on live image)
+pacstrap /mnt base linux linux-firmware
+genfstab -U /mnt TWO GREATER THAN SIGNS /mnt/etc/fstab 
+
+Chroot:
+arch-chroot /mnt (change into root directory of our new installation)
+ln -sf /usr/share/zoneinfo/REGION/CITY /etc/localtime
+hwclock --systohc (sets the hardware clock)
+pacman -S nano
+nano /etc/locale.gen (LANG=en_US.UTF-8)
+locale-gen
+nano /etc/hostname (arch)
+nano /etc/hosts = 127.0.0.1        localhost
+::1              localhost
+127.0.1.1        yourhostname
+
+Users and passwords:
+rootuser = passwd (set root pass) 
+jacob = useradd -m username (make another user)
+jacob = passwd username (set that user's password)
+usermod -aG wheel,audio,video,optical,storage jacob
+
+Sudo:
+pacman -S sudo
+EDITOR=nano visudo
+
+GRUB:
+pacman -S grub
+pacman -S  efibootmgr dosfstools os-prober mtools (if doing UEFI)
+mkdir /boot/EFI (if doing UEFI)
+mount /dev/sda1 /boot/EFI  #Mount FAT32 EFI partition (if doing UEFI)
+grub-install --target=x86_64-efi  --bootloader-id=grub_uefi --recheck (if doing UEFI)
+grub-mkconfig -o /boot/grub/grub.cfg
+
+Networking:
+pacman -S networkmanager
+systemctl enable NetworkManager
+
+Reboot:
+exit the chroot by typing "exit"
+umount /mnt (unmounts /mnt)
+reboot (or if doing this in  VirtualBox shutdown now )
+Remember to detach the ISO in VirtualBox before reboot.
+
+after reboot 
+
+login as your user
+
+installing packages you want/need 
+
+Desktop environments (new users to linux)   
+KDE
+GNOME
+Xfce
+Cinnamon
+LXDE 
+
+Window managers (experts to linux)
+
+Bspwm 
+EXWM 
+Herbstluftwm
+i3
+
+Display manager
+GDM — GNOME display manager.
+LightDM — Cross-desktop display manager, can use various front-ends written in any toolkit.
+https://github.com/canonical/lightdm/ || lightdm
+
+LXDM — LXDE display manager. Can be used independent of the LXDE desktop environment.
+https://sourceforge.net/projects/lxdm/ || lxdm, lxdm-gtk3
+
+SDDM — QML-based display manager and successor to KDM; recommended for Plasma and LXQt.
+https://github.com/sddm/sddm || sddm
+
+
+
