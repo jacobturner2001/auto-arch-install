@@ -70,30 +70,12 @@ login as your user
 
 installing packages you want/need 
 
-Desktop environments (new users to linux)   
-KDE
-GNOME
-Xfce
-Cinnamon
-LXDE 
-
 Window managers (experts to linux)
 
-Bspwm 
-EXWM 
-Herbstluftwm
-i3
+Bspwm  
 
 Display manager
 GDM — GNOME display manager.
-LightDM — Cross-desktop display manager, can use various front-ends written in any toolkit.
-https://github.com/canonical/lightdm/ || lightdm
-
-LXDM — LXDE display manager. Can be used independent of the LXDE desktop environment.
-https://sourceforge.net/projects/lxdm/ || lxdm, lxdm-gtk3
-
-SDDM — QML-based display manager and successor to KDM; recommended for Plasma and LXQt.
-https://github.com/sddm/sddm || sddm
 
 
 
